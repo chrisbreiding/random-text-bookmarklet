@@ -1,17 +1,31 @@
 (function ($) {
 
-  var textOptions = getText();
+  var textOptions = getText(),
+      regExes = Object.keys(textOptions).map(function (keyword) {
+        return {
+          keyword: keyword,
+          re: new RegExp(keyword + '$')
+        };
+      });
 
   $('textarea, input').on('keydown', function (e) {
     var textInput,
         textArray,
+        match,
         $this = $(this);
+
     if (e.which === 9) {
       textInput = $this.val();
-      textArray = textOptions[textInput];
-      if (textArray) {
+      match = false;
+
+      regExes.forEach(function (re) {
+        if ( re.re.test(textInput) ) match = re;
+      });
+
+      if (match) {
         e.preventDefault();
-        $this.val( textArray[randomIndex(textArray.length)] );
+        textArray = textOptions[match.keyword];
+        $this.val( textInput.replace(match.re, '') + textArray[randomIndex(textArray.length)] );
       }
     }
   });
