@@ -1,4 +1,4 @@
-(function ($) {
+(function () {
 
   var textOptions = getText(),
       regExes = Object.keys(textOptions).map(function (keyword) {
@@ -6,16 +6,24 @@
           keyword: keyword,
           re: new RegExp(keyword + '$')
         };
-      });
+      }),
+      slice = Array.prototype.slice,
+      textareas = slice.apply(document.getElementsByTagName('textarea')),
+      inputs = slice.apply(document.getElementsByTagName('input'));
 
-  $('textarea, input').on('keydown', function (e) {
-    var textInput,
-        textArray,
-        match,
-        $this = $(this);
+  textareas.forEach(function (textarea) {
+    textarea.addEventListener('keydown', handleKeydown, false);
+  });
+
+  inputs.forEach(function (input) {
+    input.addEventListener('keydown', handleKeydown, false);
+  });
+
+  function handleKeydown (e) {
+    var textInput, textArray, match;
 
     if (e.which === 9) {
-      textInput = $this.val();
+      textInput = this.value;
       match = false;
 
       regExes.forEach(function (re) {
@@ -25,10 +33,10 @@
       if (match) {
         e.preventDefault();
         textArray = textOptions[match.keyword];
-        $this.val( textInput.replace(match.re, '') + textArray[randomIndex(textArray.length)] );
+        this.value = textInput.replace(match.re, '') + textArray[randomIndex(textArray.length)];
       }
     }
-  });
+  }
 
   function randomIndex (len) {
     return Math.floor( Math.random() * len );
@@ -103,4 +111,4 @@
     };
   }
 
-}(jQuery));
+}());
