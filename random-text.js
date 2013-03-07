@@ -44,6 +44,35 @@
 
   function getText () {
     return {
+      "name": [
+        "Jim Weirich",
+        "Uncle Bob Martin",
+        "Paul Irish",
+        "Kent Beck",
+        "Martin Fowler",
+        "Jeff Atwood",
+        "Ring Starr",
+        "Odd Job"
+      ],
+      "fname": [
+        "Mary",
+        "Todd",
+        "Kevin",
+        "Sarah",
+        "Steven",
+        "Carl",
+        "Fumiko"
+      ],
+      "lname": [
+        "Smith",
+        "Stevens",
+        "Townsend",
+        "Jones",
+        "Lee",
+        "Patel",
+        "Tanaka",
+        "Lincoln"
+      ],
       "emot": [
         "\\(^_^)/",
         "b(^_^)d",
